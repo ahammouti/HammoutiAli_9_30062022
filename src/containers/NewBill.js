@@ -1,4 +1,5 @@
 import { ROUTES_PATH } from '../constants/routes.js'
+import NewBillUI from '../views/NewBillUI.js'
 import Logout from "./Logout.js"
 
 export default class NewBill {
@@ -14,6 +15,7 @@ export default class NewBill {
     this.fileName = null
     this.billId = null
     new Logout({ document, localStorage, onNavigate })
+    console.log(document.getElementsByClassName("container-err")[0].children[0]);
   }
   handleChangeFile = e => {
     e.preventDefault()
@@ -29,6 +31,7 @@ export default class NewBill {
 
     if (e.target.value.match(regexImg)) {
       this.document.getElementsByClassName("js-justificatif")[0].getElementsByTagName("small")[0].classList.add("d-none")
+
       this.store
         .bills()
         .create({
@@ -45,6 +48,7 @@ export default class NewBill {
     }
     else {
       this.document.getElementsByClassName("js-justificatif")[0].getElementsByTagName("small")[0].classList.remove("d-none")
+      this.document.getElementsByClassName("js-justificatif")[0].getElementsByTagName("small")[0].style.display = "block"
       fileTitle.value = "";
     }
   }
@@ -71,6 +75,7 @@ export default class NewBill {
   }
 
   // not need to cover this function by tests
+  /* istanbul ignore next */
   updateBill = (bill) => {
     if (this.store) {
       this.store
